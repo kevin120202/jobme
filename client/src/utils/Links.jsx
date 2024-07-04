@@ -14,4 +14,4 @@ const links = [
     { text: 'admin', path: 'admin', icon: <MdAdminPanelSettings /> },
 ];
 
-export default links
+export default links 
