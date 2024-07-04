@@ -8,8 +8,8 @@ export default function Landing() {
     return (
         <Wrapper>
             <nav>
-                <h2>JobMe</h2>
-                {/* <Logo /> */}
+                {/* <h2>JobMe</h2> */}
+                <Logo />
             </nav>
             <div className="container page">
                 <div className="info">
