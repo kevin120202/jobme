@@ -2,18 +2,17 @@ import * as dotenv from "dotenv"
 dotenv.config()
 import express from "express"
 const app = express()
+// If the app is in development mode, use the morgan middleware for logging
 import morgan from "morgan"
-import { nanoid } from "nanoid"
 
-let jobs = [
-    { id: nanoid(), company: "google", position: "swe" },
-    { id: nanoid(), company: "apple", position: "manager" }
-]
+// routers
+import jobRouter from "./routes/jobRouter.js"
 
 if (process.env.NODE_ENV === "development") {
     app.use(morgan("dev"))
 }
 
+// Use the express.json middleware to parse JSON bodies
 app.use(express.json())
 
 app.get("/", (req, res) => {
@@ -25,31 +24,18 @@ app.post("/", (req, res) => {
     res.json({ message: "receieved", data: req.body })
 })
 
-// GET ALL JOBS
-app.get("/api/v1/jobs", (req, res) => {
-    res.status(200).json({ jobs })
+// Use the jobRouter for routes starting with /api/v1/jobs
+app.use("/api/v1/jobs", jobRouter)
+
+// Handle all other routes that are not defined and send a 404 response
+app.use("*", (req, res) => {
+    res.status(404).json({ msg: "not found" })
 })
 
-// CREATE A JOB
-app.post("/api/v1/jobs", (req, res) => {
-    const { company, position } = req.body
-    if (!company || !position) {
-        return res.status(404).json({ msg: "please provide all information" })
-    }
-    const id = nanoid(10)
-    const job = { id, company, position }
-    jobs.push(job)
-    res.status(201).json({ jobs })
-})
-
-// GET SINGLE JOB
-app.get("/api/v1/jobs/:id", (req, res) => {
-    const { id } = req.params
-    const job = jobs.find(job => job.id === id)
-    if (!job) {
-        return res.status(404).json({ msg: `no job with id ${id}` })
-    }
-    res.status(200).json({ job })
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.log(err);
+    res.status(500).json({ msg: "something went wrong" })
 })
 
 const port = process.env.PORT || 5100
