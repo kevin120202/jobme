@@ -1,5 +1,5 @@
 import { body, param, validationResult } from "express-validator"
-import { BadRequestError, NotFoundError } from "./customErrors.js"
+import { BadRequestError, NotFoundError, UnauthenticatedError } from "./customErrors.js"
 import { JOB_STATUS, JOB_TYPE } from "../utils/constants.js"
 import Job from "../models/JobModel.js"
 import mongoose from "mongoose"
@@ -61,7 +61,7 @@ export const validateIdParams = withValidationErrors([
 */
 export const validateRegisterInput = withValidationErrors([
     body("name").notEmpty().withMessage("name is required"),
-    body("email").notEmpty().withMessage("email is required").isEmail().withMessage("invalid email format").customSanitizer(async (email) => {
+    body("email").notEmpty().withMessage("email is required").isEmail().withMessage("invalid email format").custom(async (email) => {
         const user = await User.findOne({ email })
         if (user) throw new BadRequestError('email already exists')
     }),
@@ -69,4 +69,12 @@ export const validateRegisterInput = withValidationErrors([
     body("lastName").notEmpty().withMessage("last name is required"),
     body("location").notEmpty().withMessage("location is required"),
     body("role").isIn(['user', 'admin']).withMessage("invalid role value"),
+])
+
+export const validateLoginInput = withValidationErrors([
+    body("email").notEmpty().withMessage("email is required").isEmail().withMessage("invalid email format").custom(async (email) => {
+        const user = await User.findOne({ email })
+        if (!user) throw new UnauthenticatedError("invalid credentials")
+    }),
+    body("password").notEmpty().withMessage("password is required")
 ])
