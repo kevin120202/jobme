@@ -3,6 +3,7 @@ import * as dotenv from "dotenv"
 dotenv.config()
 import express from "express"
 const app = express()
+import cookieParser from "cookie-parser"
 // If the app is in development mode, use the morgan middleware for logging
 import morgan from "morgan"
 import mongoose from "mongoose"
@@ -14,11 +15,13 @@ import authRouter from "./routes/authRouter.js"
 
 // middleware
 import errorHandlerMiddleware from "./middleware/errorHandlerMIddleware.js"
+import { authenticateUser } from "./middleware/authMiddleware.js"
 
 if (process.env.NODE_ENV === "development") {
     app.use(morgan("dev"))
 }
 
+app.use(cookieParser())
 // Use the express.json middleware to parse JSON bodies
 app.use(express.json())
 
@@ -32,7 +35,7 @@ app.post("/", (req, res) => {
 })
 
 // Use the jobRouter for routes starting with /api/v1/jobs
-app.use("/api/v1/jobs", jobRouter)
+app.use("/api/v1/jobs", authenticateUser, jobRouter)
 // Use the authRouter for routes starting with /api/v1/auth
 app.use("/api/v1/auth", authRouter)
 
