@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login, register } from "../controllers/authController.js";
+import { login, logout, register } from "../controllers/authController.js";
 import { validateLoginInput, validateRegisterInput } from "../errors/validationMiddleware.js";
 const router = Router()
 
@@ -16,5 +16,7 @@ router.post("/register", validateRegisterInput, register)
 // It directly calls the login controller function to authenticate the user
 // POST /api/v1/jobs/login - Login
 router.post("/login", validateLoginInput, login)
+
+router.get('/logout', logout)
 
 export default router

@@ -3,7 +3,6 @@ import Job from "../models/JobModel.js"
 
 // Controller to get all jobs
 export const getAllJobs = async (req, res) => {
-    console.log(req.user);
     const jobs = await Job.find({ createdBy: req.user.userId })
     res.status(StatusCodes.OK).json({ jobs })
 }

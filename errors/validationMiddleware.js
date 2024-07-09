@@ -1,5 +1,5 @@
 import { body, param, validationResult } from "express-validator"
-import { BadRequestError, NotFoundError, UnauthenticatedError } from "./customErrors.js"
+import { BadRequestError, NotFoundError, UnathorizedError, UnauthenticatedError } from "./customErrors.js"
 import { JOB_STATUS, JOB_TYPE } from "../utils/constants.js"
 import Job from "../models/JobModel.js"
 import mongoose from "mongoose"
@@ -19,6 +19,9 @@ const withValidationErrors = (validateValues) => {
                 const errorMessages = errors.array().map(error => error.msg)
                 if (errorMessages[0].startsWith("no job")) {
                     throw new NotFoundError(errorMessages)
+                }
+                if (errorMessages[0].startsWith("not authorized")) {
+                    throw new UnathorizedError("not authorized to access this route")
                 }
                 throw new BadRequestError(errorMessages)
             }
@@ -47,11 +50,16 @@ export const validateJobInput = withValidationErrors([
 */
 export const validateIdParams = withValidationErrors([
     param('id')
-        .custom(async (value) => {
+        .custom(async (value, { req }) => {
             const isValidId = mongoose.Types.ObjectId.isValid(value)
             if (!isValidId) throw new BadRequestError("invalid MongoDB id")
             const job = await Job.findById(value)
             if (!job) throw new NotFoundError(`no job with id ${value}`)
+            const isAdmin = req.user.role === "admin"
+            const isOwner = req.user.userId === job.createdBy.toString()
+            if (!isAdmin && !isOwner) {
+                throw new UnathorizedError("not authorized to access this route")
+            }
         })
 ])
 
@@ -68,7 +76,6 @@ export const validateRegisterInput = withValidationErrors([
     body("password").notEmpty().withMessage("password is required").isLength({ min: 8 }).withMessage("password must be 8 characters long"),
     body("lastName").notEmpty().withMessage("last name is required"),
     body("location").notEmpty().withMessage("location is required"),
-    // body("role").isIn(['user', 'admin']).withMessage("invalid role value"),
 ])
 
 export const validateLoginInput = withValidationErrors([
@@ -77,4 +84,16 @@ export const validateLoginInput = withValidationErrors([
         if (!user) throw new UnauthenticatedError("invalid credentials")
     }),
     body("password").notEmpty().withMessage("password is required")
+])
+
+export const validateUpdateUserInput = withValidationErrors([
+    body("name").notEmpty().withMessage("name is required"),
+    body("email").notEmpty().withMessage("email is required").isEmail().withMessage("invalid email format").custom(async (email) => {
+        const user = await User.findOne({ email })
+        if (user && user._id.toString() !== req.user.userId) {
+            throw new BadRequestError('email already exists')
+        }
+    }),
+    body("lastName").notEmpty().withMessage("last name is required"),
+    body("location").notEmpty().withMessage("location is required"),
 ])
