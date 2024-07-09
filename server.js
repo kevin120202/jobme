@@ -10,6 +10,7 @@ import { StatusCodes } from "http-status-codes"
 
 // routers
 import jobRouter from "./routes/jobRouter.js"
+import authRouter from "./routes/authRouter.js"
 
 // middleware
 import errorHandlerMiddleware from "./middleware/errorHandlerMIddleware.js"
@@ -32,6 +33,8 @@ app.post("/", (req, res) => {
 
 // Use the jobRouter for routes starting with /api/v1/jobs
 app.use("/api/v1/jobs", jobRouter)
+// Use the authRouter for routes starting with /api/v1/auth
+app.use("/api/v1/auth", authRouter)
 
 // Handle all other routes that are not defined and send a 404 response
 app.use("*", (req, res) => {
