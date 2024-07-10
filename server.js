@@ -22,6 +22,7 @@ if (process.env.NODE_ENV === "development") {
     app.use(morgan("dev"))
 }
 
+// Middleware to parse cookies in incoming requests
 app.use(cookieParser())
 // Use the express.json middleware to parse JSON bodies
 app.use(express.json())
@@ -37,6 +38,7 @@ app.post("/", (req, res) => {
 
 // Use the jobRouter for routes starting with /api/v1/jobs
 app.use("/api/v1/jobs", authenticateUser, jobRouter)
+// Routes related to users, with authentication require
 app.use("/api/v1/users", authenticateUser, userRouter)
 // Use the authRouter for routes starting with /api/v1/auth
 app.use("/api/v1/auth", authRouter)
