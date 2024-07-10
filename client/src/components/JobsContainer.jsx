@@ -9,7 +9,7 @@ export default function JobsContainer() {
     if (jobs.length === 0) {
         return (
             <Wrapper>
-                <h2>Go apply for jobs...</h2>
+                <h2>apply for jobs...</h2>
             </Wrapper>
         )
     }

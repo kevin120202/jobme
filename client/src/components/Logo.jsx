@@ -6,7 +6,7 @@ export default function Logo() {
     return (
         <img src={logo} alt="logo" className='logo' style={
             {
-                width: "160px", marginTop: "20px",
+                width: "160px", marginTop: "20px"
             }
         } />
     )
