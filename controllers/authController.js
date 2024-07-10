@@ -41,6 +41,13 @@ export const login = async (req, res) => {
     res.status(StatusCodes.OK).json({ msg: "user logged in" })
 }
 
+/**
+ * Logs out a user.
+ * - Sets a cookie named 'token' to 'logout' with an immediate expiration date.
+ * - This effectively clears the JWT token from the client's cookies.
+ * This function ensures that the user's session is terminated by removing the JWT token from their cookies.
+ * It helps in securely logging out users by invalidating their current session token.
+ */
 export const logout = (req, res) => {
     res.cookie('token', 'logout', {
         httpOnly: true,
