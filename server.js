@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser"
 import morgan from "morgan"
 import mongoose from "mongoose"
 import { StatusCodes } from "http-status-codes"
+import cloudinary from "cloudinary"
 
 // routers
 import jobRouter from "./routes/jobRouter.js"
@@ -22,6 +23,12 @@ import path from 'path'
 // middleware
 import errorHandlerMiddleware from "./middleware/errorHandlerMIddleware.js"
 import { authenticateUser } from "./middleware/authMiddleware.js"
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET,
+})
 
 if (process.env.NODE_ENV === "development") {
     app.use(morgan("dev"))
