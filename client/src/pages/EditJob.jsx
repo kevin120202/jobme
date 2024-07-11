@@ -32,13 +32,10 @@ export const action = async ({ request, params }) => {
     }
 }
 
-
-
 export default function EditJob() {
     const job = useLoaderData()
     const navigation = useNavigation()
     const isSubmitting = navigation.state === 'submitting'
-    const params = useParams()
 
     return (
         <Wrapper>
