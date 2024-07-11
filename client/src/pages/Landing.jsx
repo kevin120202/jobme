@@ -14,7 +14,7 @@ export default function Landing() {
             <div className="container page">
                 <div className="info">
                     <h1>track your <span>Worries</span> away</h1>
-                    <p>Finding and applying for jobs or internships can be overwhelming. That's wher JobMe comes into play - a simple, efficient way to keep track of all your applications in one place.</p>
+                    <p>Finding and applying for jobs or internships can be overwhelming. That's where JobMe comes into play - a simple and efficient way to keep track of all your applications in one place.</p>
                     <Link to="/register" className='btn register-link'>Register</Link>
                     <Link to="/login" className='btn'>Login / Demo User</Link>
                 </div>

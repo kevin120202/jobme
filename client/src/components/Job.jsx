@@ -9,6 +9,7 @@ day.extend(advancedFormat)
 
 export default function Job({ _id, company, position, jobStatus, jobType, createdAt, jobLocation }) {
     const date = day(createdAt).format("MMM, Do, YYYY")
+
     return (
         <Wrapper>
             <header>

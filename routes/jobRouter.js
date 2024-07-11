@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createJob, deleteJob, getAllJobs, getJob, updateJob } from "../controllers/jobController.js";
+import { createJob, deleteJob, getAllJobs, getJob, showStats, updateJob } from "../controllers/jobController.js";
 import { validateIdParams, validateJobInput } from "../errors/validationMiddleware.js";
 import { checkForTestUser } from "../middleware/authMiddleware.js";
 const router = Router()
@@ -8,6 +8,8 @@ const router = Router()
 // GET /api/v1/jobs - Fetch all jobs
 // POST /api/v1/jobs - Create a new job
 router.route("/").get(getAllJobs).post(checkForTestUser, validateJobInput, createJob)
+
+router.route("/stats").get(showStats)
 
 // Define a route for getting, updating, and deleting a job by ID
 // GET /api/v1/jobs/:id - Fetch a single job by its ID

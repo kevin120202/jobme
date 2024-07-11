@@ -14,6 +14,7 @@ try {
     const jobs = jsonJobs.map(job => {
         return { ...job, createdBy: user._id }
     })
+    console.log(jobs);
     await Job.deleteMany({ createdBy: user._id })
     await Job.create(jobs)
     process.exit(0)
