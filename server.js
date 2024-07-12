@@ -58,6 +58,10 @@ app.use("/api/v1/users", authenticateUser, userRouter)
 // Use the authRouter for routes starting with /api/v1/auth
 app.use("/api/v1/auth", authRouter)
 
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "./public", 'index.html'))
+})
+
 // Handle all other routes that are not defined and send a 404 response
 app.use("*", (req, res) => {
     res.status(StatusCodes.NOT_FOUND).json({ msg: "not found" })
