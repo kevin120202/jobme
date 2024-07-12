@@ -42,8 +42,8 @@ export default function Login() {
             <Form method="post" className='form'>
                 <Logo />
                 <h4>login</h4>
-                <FormRow type="email" name="email" defaultValue="kevin@gmail.com" />
-                <FormRow type="password" name="password" defaultValue="12345678." />
+                <FormRow type="email" name="email" />
+                <FormRow type="password" name="password" />
                 <button type="submit" className='btn btn-block' disabled={isSubmitting}>{isSubmitting ? "submitting" : "submit"}</button>
                 <button type="button" className='btn btn-block' onClick={loginDemoUser}>demo</button>
                 <p>

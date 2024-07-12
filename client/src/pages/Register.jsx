@@ -27,11 +27,11 @@ export default function Register() {
             <Form method="post" className='form'>
                 <Logo />
                 <h4>Register</h4>
-                <FormRow type="text" name="name" defaultValue="kevin" />
-                <FormRow type="text" name="lastName" defaultValue="delapaz" labelText="last name" />
-                <FormRow type="text" name="location" defaultValue="chicago" />
-                <FormRow type="email" name="email" defaultValue="kevindelapaz21@gmail.com" />
-                <FormRow type="password" name="password" defaultValue="12345678." />
+                <FormRow type="text" name="name" />
+                <FormRow type="text" name="lastName" labelText="last name" />
+                <FormRow type="text" name="location" />
+                <FormRow type="email" name="email" />
+                <FormRow type="password" name="password" />
                 <button type='submit' className='btn btn-block' disabled={isSubmitting}>{isSubmitting === 'submitting' ? "submitting..." : "submit"}</button>
                 <p>Already a member?
                     <Link to="/login" className='member-btn'>Login</Link>
