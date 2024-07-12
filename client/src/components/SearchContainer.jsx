@@ -31,8 +31,7 @@ export default function SearchContainer() {
                     <FormRowSelect labelText='job status' name="jobStatus" list={['all', ...Object.values(JOB_STATUS)]} defaultValue={searchValues.jobStatus} onChange={(e) => { submit(e.currentTarget.form) }} />
                     <FormRowSelect labelText='job type' name="jobType" list={['all', ...Object.values(JOB_TYPE)]} defaultValue={searchValues.jobType} onChange={(e) => { submit(e.currentTarget.form) }} />
                     <FormRowSelect name={searchValues.sort} list={[...Object.values(JOB_SORT_BY)]} defaultValue='newest' onChange={(e) => { submit(e.currentTarget.form) }} />
-                    <Link to="/dashboard/all-jobs" className='btn form-btn delete-btn'>Reset</Link>
-                    <button>submit</button>
+                    <Link to="/dashboard/all-jobs" className='btn form-btn delete-btn'>Reset values</Link>
                 </div>
             </Form>
         </Wrapper>
