@@ -5,6 +5,8 @@ JobMe is a full-stack MERN application designed to streamline the process of tra
 <img width="1439" alt="Screenshot 2024-07-11 at 10 15 59 PM" src="https://github.com/user-attachments/assets/0c9e43c1-c73d-42eb-9c3e-173d74eb93c1">
 <img width="1427" alt="Screenshot 2024-07-11 at 10 23 16 PM" src="https://github.com/user-attachments/assets/7b4932cc-5d81-42ed-91ff-31656256f715">
 
+## Check It Out!
+live
 
 ## Features
 - User authentication with JWT and cookies
