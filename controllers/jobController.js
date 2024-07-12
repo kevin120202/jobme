@@ -5,28 +5,34 @@ import day from 'dayjs'
 
 // Controller to get all jobs
 export const getAllJobs = async (req, res) => {
-    const { search, jobStatus, jobType, sort } = req.query
+    const { position, company, jobStatus, jobType, sort } = req.query
     const queryObj = {
         createdBy: req.user.userId
     }
-    if (search) {
-        queryObj.$or = [
-            { position: { $regex: search, $options: 'i' } },
-            { company: { $regex: search, $options: 'i' } }
-        ]
+
+    if (position) {
+        queryObj.position = { $regex: position, $options: 'i' }
     }
+
+    if (company) {
+        queryObj.company = { $regex: company, $options: 'i' }
+    }
+
     if (jobStatus && jobStatus !== 'all') {
         queryObj.jobStatus = jobStatus
     }
+
     if (jobType && jobType !== 'all') {
         queryObj.jobType = jobType
     }
+
     const sortOptions = {
         newest: "-createdAt",
         oldest: "createdAt",
         'a-z': 'position',
         'z-a': "-position",
     }
+
     const sortKey = sortOptions[sort] || sortOptions.newest
     const page = Number(req.query.page) || 1
     const limit = Number(req.query.limit) || 20

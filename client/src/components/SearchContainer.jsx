@@ -25,13 +25,21 @@ export default function SearchContainer() {
             <Form className='form'>
                 <h5 className="form-title">search form</h5>
                 <div className="form-center">
-                    <FormRow type="search" name="search" defaultValue={searchValues.search} onChange={debounce((form) => {
+                    <FormRow type="search" name="position" defaultValue={searchValues.position} onChange={debounce((form) => {
                         submit(form)
                     })} />
+
+                    <FormRow type="search" name="company" defaultValue={searchValues.company} onChange={debounce((form) => {
+                        submit(form)
+                    })} />
+
                     <FormRowSelect labelText='job status' name="jobStatus" list={['all', ...Object.values(JOB_STATUS)]} defaultValue={searchValues.jobStatus} onChange={(e) => { submit(e.currentTarget.form) }} />
                     <FormRowSelect labelText='job type' name="jobType" list={['all', ...Object.values(JOB_TYPE)]} defaultValue={searchValues.jobType} onChange={(e) => { submit(e.currentTarget.form) }} />
-                    <FormRowSelect name={searchValues.sort} list={[...Object.values(JOB_SORT_BY)]} defaultValue='newest' onChange={(e) => { submit(e.currentTarget.form) }} />
-                    <Link to="/dashboard/all-jobs" className='btn form-btn delete-btn'>Reset values</Link>
+                    <FormRowSelect name={searchValues.sort} list={[...Object.values(JOB_SORT_BY)]} defaultValue='newest' onChange={(e) => { submit(e.currentTarget.form) }} labelText="sort" />
+
+                    {/* <FormRowSelect name={searchValues.sort} list={[...Object.values(JOB_SORT_BY)]} defaultValue='newest' onChange={(e) => { submit(e.currentTarget.form) }} labelText="sort" /> */}
+
+                    <Link to="/dashboard/all-jobs" className='btn form-btn delete-btn'>Reset search values</Link>
                 </div>
             </Form>
         </Wrapper>

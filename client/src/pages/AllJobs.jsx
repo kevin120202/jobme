@@ -19,6 +19,7 @@ const AllJobsContext = createContext()
 
 export default function AllJobs() {
     const { data, searchValues } = useLoaderData()
+
     return (
         <AllJobsContext.Provider value={{ data, searchValues }}>
             <SearchContainer />
