@@ -5,8 +5,36 @@ import day from 'dayjs'
 
 // Controller to get all jobs
 export const getAllJobs = async (req, res) => {
-    const jobs = await Job.find({ createdBy: req.user.userId })
-    res.status(StatusCodes.OK).json({ jobs })
+    const { search, jobStatus, jobType, sort } = req.query
+    const queryObj = {
+        createdBy: req.user.userId
+    }
+    if (search) {
+        queryObj.$or = [
+            { position: { $regex: search, $options: 'i' } },
+            { company: { $regex: search, $options: 'i' } }
+        ]
+    }
+    if (jobStatus && jobStatus !== 'all') {
+        queryObj.jobStatus = jobStatus
+    }
+    if (jobType && jobType !== 'all') {
+        queryObj.jobType = jobType
+    }
+    const sortOptions = {
+        newest: "-createdAt",
+        oldest: "createdAt",
+        'a-z': 'position',
+        'z-a': "-position",
+    }
+    const sortKey = sortOptions[sort] || sortOptions.newest
+    const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit) || 20
+    const skip = (page - 1) * limit
+    const jobs = await Job.find(queryObj).sort(sortKey).skip(skip).limit(limit)
+    const totalJobs = await Job.countDocuments(queryObj)
+    const numOfPages = Math.ceil(totalJobs / limit)
+    res.status(StatusCodes.OK).json({ totalJobs, numOfPages, currentPage: page, jobs })
 }
 
 // Controller to create a new job

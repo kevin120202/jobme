@@ -9,6 +9,7 @@ const router = Router()
 // POST /api/v1/jobs - Create a new job
 router.route("/").get(getAllJobs).post(checkForTestUser, validateJobInput, createJob)
 
+// GET /api/v1/jobs/stats
 router.route("/stats").get(showStats)
 
 // Define a route for getting, updating, and deleting a job by ID
