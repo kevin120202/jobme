@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react'
-import { Outlet, useLoaderData, redirect, useNavigate } from 'react-router-dom'
+import { Outlet, useLoaderData, redirect, useNavigate, useNavigation } from 'react-router-dom'
 import Wrapper from '../assets/wrappers/Dashboard'
 import SmallSidebar from '../components/SmallSidebar'
 import BigSidebar from '../components/BigSidebar'
@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar'
 import { checkDefaultTheme } from '../App'
 import customFetch from '../utils/customFetch'
 import { toast } from "react-toastify"
+import { Loading } from '../components'
 
 export const loader = async () => {
     try {
@@ -22,6 +23,8 @@ const DashboardContext = createContext()
 export default function DashboardLayout() {
     const { user } = useLoaderData()
     const navigate = useNavigate()
+    const navigation = useNavigation()
+    const isLoading = navigation.state === "loading"
     const [showSidebar, setShowSidebar] = useState(false)
     const [isDarkTheme, setIsDarkTheme] = useState(checkDefaultTheme())
 
@@ -51,7 +54,7 @@ export default function DashboardLayout() {
                     <div>
                         <Navbar />
                         <div className="dashboard-page">
-                            <Outlet context={{ user }} />
+                            {isLoading ? <Loading /> : <Outlet context={{ user }} />}
                         </div>
                     </div>
                 </main>
