@@ -34,8 +34,8 @@ if (process.env.NODE_ENV === "development") {
     app.use(morgan("dev"))
 }
 
-const _dirname = dirname(fileURLToPath(import.meta.url))
-app.use(express.static(path.resolve(_dirname, "./public")))
+const __dirname = dirname(fileURLToPath(import.meta.url))
+app.use(express.static(path.resolve(__dirname, "./client/dist")))
 
 // Middleware to parse cookies in incoming requests
 app.use(cookieParser())
@@ -59,7 +59,7 @@ app.use("/api/v1/users", authenticateUser, userRouter)
 app.use("/api/v1/auth", authRouter)
 
 app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "./public", 'index.html'))
+    res.sendFile(path.resolve(__dirname, "./client/dist", 'index.html'))
 })
 
 // Handle all other routes that are not defined and send a 404 response
