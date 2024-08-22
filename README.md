@@ -6,6 +6,7 @@ JobMe is a full-stack MERN application designed to streamline the process of tra
 <img width="1427" alt="Screenshot 2024-07-11 at 10 23 16 PM" src="https://github.com/user-attachments/assets/7b4932cc-5d81-42ed-91ff-31656256f715">
 
 ## Check It Out!
+Video: https://www.loom.com/share/9d34aed3c90546e68211af3114cd365c?sid=6a881ac7-2b7c-4791-9103-dd8bbc66bcb2
 <a href="https://jobme-zlbm.onrender.com/" target="_blank">JobMe</a>
 
 ## Features
